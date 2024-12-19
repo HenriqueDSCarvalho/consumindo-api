@@ -1,6 +1,6 @@
 import { View, Text, FlatList, ActivityIndicator } from "react-native";
 import { styles } from "../src/styles/styles";
-
+import axios from "axios";
 import React, { useState, useEffect } from "react";
 
 export default function Index() {
@@ -9,13 +9,10 @@ export default function Index() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(
-        "https://jsonplaceholder.typicode.com/posts"
-      );
-      const json = await response.json();
-      setData(json);
+      const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
+      setData(response.data);
     } catch (error) {
-      console.error("erro ao buscar dados", error);
+      console.error('Erro ao buscar dados:', error);
     } finally {
       setLoading(false);
     }
